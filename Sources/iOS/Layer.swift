@@ -38,7 +38,7 @@ open class Layer: CAShapeLayer {
      allows the dropshadow effect on the backing layer, while clipping
      the image to a desired shape within the visualLayer.
      */
-	open let visualLayer = CAShapeLayer()
+    public let visualLayer = CAShapeLayer()
 	
 	/**
      A property that manages an image for the visualLayer's contents
@@ -89,20 +89,20 @@ open class Layer: CAShapeLayer {
 	/// A Preset for the contentsGravity property.
 	open var contentsGravityPreset: Gravity {
 		didSet {
-			contentsGravity = GravityToValue(gravity: contentsGravityPreset)
+			contentsGravity = convertToCALayerContentsGravity(GravityToValue(gravity: contentsGravityPreset))
 		}
 	}
 	
 	/// Determines how content should be aligned within the visualLayer's bounds.
 	@IBInspectable
-    open override var contentsGravity: String {
-		get {
-			return visualLayer.contentsGravity
-		}
-		set(value) {
-			visualLayer.contentsGravity = value
-		}
-	}
+    open override var contentsGravity: CALayerContentsGravity {
+        get {
+            return visualLayer.contentsGravity
+        }
+        set(value) {
+            visualLayer.contentsGravity = value
+        }
+    }
 	
 	/**
      A property that sets the cornerRadius of the backing layer. If the shape
@@ -173,4 +173,14 @@ open class Layer: CAShapeLayer {
 		visualLayer.frame = bounds
 		visualLayer.cornerRadius = cornerRadius
 	}
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToCALayerContentsGravity(_ input: String) -> CALayerContentsGravity {
+	return CALayerContentsGravity(rawValue: input)
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCALayerContentsGravity(_ input: CALayerContentsGravity) -> String {
+	return input.rawValue
 }

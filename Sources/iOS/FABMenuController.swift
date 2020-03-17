@@ -57,13 +57,13 @@ extension UIViewController {
 open class FABMenuController: RootController {
     /// Reference to the MenuView.
     @IBInspectable
-    open let fabMenu = FABMenu()
+    public let fabMenu = FABMenu()
     
     /// A FABMenuBacking value type.
     open var fabMenuBacking = FABMenuBacking.blur
     
     /// The fabMenuBacking UIBlurEffectStyle.
-    open var fabMenuBackingBlurEffectStyle = UIBlurEffectStyle.light
+    open var fabMenuBackingBlurEffectStyle = UIBlurEffect.Style.light
     
     /// A reference to the blurView.
     open fileprivate(set) var blurView: UIView?
@@ -132,7 +132,7 @@ extension FABMenuController {
         blurView = UIView()
         blurView?.layout(blur).edges()
         view.layout(blurView!).edges()
-        view.bringSubview(toFront: fabMenu)
+        view.bringSubviewToFront(fabMenu)
     }
     
     /// Hides the blurView.

@@ -129,7 +129,7 @@ open class PulseView: View, Pulseable, PulseableLayer {
     }
 }
 
-extension PulseView {
+@objc extension PulseView {
     /// Prepares the pulse motion.
     fileprivate func preparePulse() {
         pulse = Pulse(pulseView: self, pulseLayer: visualLayer)

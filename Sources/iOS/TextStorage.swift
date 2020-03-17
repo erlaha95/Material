@@ -57,7 +57,7 @@ public protocol TextStorageDelegate: NSTextStorageDelegate {
 
 open class TextStorage: NSTextStorage {
     /// A storage facility for attributed text.
-    open let storage = NSMutableAttributedString()
+    public let storage = NSMutableAttributedString()
     
     /// The regular expression to match text fragments against.
 	open var expression: NSRegularExpression?
@@ -105,7 +105,7 @@ extension TextStorage {
      If you don't need this value, pass NULL.
      - Returns: The attributes for the character at index.
      */
-	open override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [String: Any] {
+	open override func attributes(at location: Int, effectiveRange range: NSRangePointer?) -> [NSAttributedString.Key: Any] {
 		return storage.attributes(at: location, effectiveRange: range)
 	}
 	
@@ -126,8 +126,11 @@ extension TextStorage {
      - Parameter range: A range of characters that will have their
      attributes updated.
      */
-	open override func setAttributes(_ attrs: [String : Any]?, range: NSRange) {
-		storage.setAttributes(attrs, range: range)
+	open override func setAttributes(_ attrs: [NSAttributedString.Key : Any]?, range: NSRange) {
+        // Local variable inserted by Swift 4.2 migrator.
+        let attrs = convertFromOptionalNSAttributedStringKeyDictionary(attrs)
+
+		storage.setAttributes(convertToOptionalNSAttributedStringKeyDictionary(attrs), range: range)
         edited(.editedAttributes, range: range, changeInLength: 0)
 	}
     
@@ -138,8 +141,11 @@ extension TextStorage {
      - Parameter range: A range of characters that will have their
      attributes added.
      */
-    open override func addAttribute(_ name: String, value: Any, range: NSRange) {
-        storage.addAttribute(name, value: value, range: range)
+    open override func addAttribute(_ name: NSAttributedString.Key, value: Any, range: NSRange) {
+// Local variable inserted by Swift 4.2 migrator.
+let name = convertFromNSAttributedStringKey(name)
+
+        storage.addAttribute(convertToNSAttributedStringKey(name), value: value, range: range)
         edited(.editedAttributes, range: range, changeInLength: 0)
     }
     
@@ -149,8 +155,38 @@ extension TextStorage {
      - Parameter range: A range of characters that will have their
      attributes removed.
      */
-    open override func removeAttribute(_ name: String, range: NSRange) {
-        storage.removeAttribute(name, range: range)
+    open override func removeAttribute(_ name: NSAttributedString.Key, range: NSRange) {
+// Local variable inserted by Swift 4.2 migrator.
+let name = convertFromNSAttributedStringKey(name)
+
+        storage.removeAttribute(convertToNSAttributedStringKey(name), range: range)
         edited(.editedAttributes, range: range, changeInLength: 0)
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromOptionalNSAttributedStringKeyDictionary(_ input: [NSAttributedString.Key: Any]?) -> [String: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKeyDictionary(_ input: [NSAttributedString.Key: Any]) -> [String: Any] {
+	return Dictionary(uniqueKeysWithValues: input.map {key, value in (key.rawValue, value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToNSAttributedStringKey(_ input: String) -> NSAttributedString.Key {
+	return NSAttributedString.Key(rawValue: input)
 }

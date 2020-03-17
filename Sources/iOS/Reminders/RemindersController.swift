@@ -50,7 +50,7 @@ extension UIViewController {
 
 open class RemindersController: UIViewController {
     /// A reference to a Reminder.
-    open let reminders = Reminders()
+    public let reminders = Reminders()
     
     open override func viewDidLoad() {
         super.viewDidLoad()

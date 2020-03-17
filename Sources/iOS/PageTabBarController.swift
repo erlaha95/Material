@@ -101,7 +101,7 @@ public protocol PageTabBarControllerDelegate {
 open class PageTabBarController: RootController {
     /// Reference to the PageTabBar.
     @IBInspectable
-    open let pageTabBar = PageTabBar()
+    public let pageTabBar = PageTabBar()
     
     /// A boolean that indicates whether bounce is enabled.
     open var isBounceEnabled: Bool {
@@ -205,7 +205,7 @@ open class PageTabBarController: RootController {
      - Parameter animated: A boolean indicating to include animation.
      - Parameter completion: An optional completion block.
      */
-    open func setViewControllers(_ viewControllers: [UIViewController], direction: UIPageViewControllerNavigationDirection, animated: Bool, completion: ((Bool) -> Void)? = nil) {
+    open func setViewControllers(_ viewControllers: [UIViewController], direction: UIPageViewController.NavigationDirection, animated: Bool, completion: ((Bool) -> Void)? = nil) {
         pageViewController?.setViewControllers(viewControllers, direction: direction, animated: animated, completion: completion)
     }
     
@@ -291,7 +291,7 @@ extension PageTabBarController {
             return
         }
         
-        let direction: UIPageViewControllerNavigationDirection = index < internalSelectedIndex ? .reverse : .forward
+        let direction: UIPageViewController.NavigationDirection = index < internalSelectedIndex ? .reverse : .forward
         
         isTabSelectedAnimation = true
         

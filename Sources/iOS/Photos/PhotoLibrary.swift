@@ -570,7 +570,7 @@ extension PhotoLibrary {
      - Returns: A PHImageRequestID.
      */
     @discardableResult
-    public func requestImageData(for asset: PHAsset, options: PHImageRequestOptions?, completion: @escaping (Data?, String?, UIImageOrientation, [AnyHashable: Any]?) -> Void) -> PHImageRequestID {
+    public func requestImageData(for asset: PHAsset, options: PHImageRequestOptions?, completion: @escaping (Data?, String?, UIImage.Orientation, [AnyHashable: Any]?) -> Void) -> PHImageRequestID {
         return PHImageManager.default().requestImageData(for: asset, options: options, resultHandler: completion)
     }
     

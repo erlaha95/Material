@@ -355,7 +355,7 @@ extension CALayer {
             }
             
             let g = Motion.animate(group: a, duration: d)
-            g.fillMode = MotionAnimationFillModeToValue(mode: .forwards)
+            g.fillMode = convertToCAMediaTimingFillMode(MotionAnimationFillModeToValue(mode: .forwards))
             g.isRemovedOnCompletion = false
             g.timingFunction = MotionAnimationTimingFunctionToValue(timingFunction: tf)
             
@@ -796,4 +796,9 @@ extension Motion {
         animation.toValue = NSNumber(floatLiteral: Double(radius))
         return animation
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToCAMediaTimingFillMode(_ input: String) -> CAMediaTimingFillMode {
+	return CAMediaTimingFillMode(rawValue: input)
 }

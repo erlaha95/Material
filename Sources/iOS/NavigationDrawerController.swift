@@ -415,13 +415,13 @@ open class NavigationDrawerController: RootController {
 		prepare()
 	}
 	
-    open override func transition(to viewController: UIViewController, duration: TimeInterval = 0.5, options: UIViewAnimationOptions = [], animations: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
+    open override func transition(to viewController: UIViewController, duration: TimeInterval = 0.5, options: UIView.AnimationOptions = [], animations: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
         super.transition(to: viewController, duration: duration, options: options, animations: animations) { [weak self, completion = completion] (result) in
             guard let s = self else {
                 return
             }
             
-            s.view.sendSubview(toBack: s.contentViewController.view)
+            s.view.sendSubviewToBack(s.contentViewController.view)
             completion?(result)
         }
     }
@@ -890,7 +890,7 @@ open class NavigationDrawerController: RootController {
                 return
             }
             
-            v.windowLevel = UIWindowLevelNormal
+            v.windowLevel = UIWindow.Level.normal
             
             s.delegate?.navigationDrawerController?(navigationDrawerController: s, statusBar: false)
         }
@@ -911,7 +911,7 @@ open class NavigationDrawerController: RootController {
                 return
             }
             
-            v.windowLevel = UIWindowLevelStatusBar + 1
+            v.windowLevel = UIWindow.Level.statusBar + 1
             
             s.delegate?.navigationDrawerController?(navigationDrawerController: s, statusBar: true)
         }
@@ -990,7 +990,7 @@ extension NavigationDrawerController {
     fileprivate func prepareContentViewController() {
         contentViewController.view.backgroundColor = .black
         prepare(viewController: contentViewController, withContainer: view)
-        view.sendSubview(toBack: contentViewController.view)
+        view.sendSubviewToBack(contentViewController.view)
     }
     
     /// A method that prepares the leftViewController.

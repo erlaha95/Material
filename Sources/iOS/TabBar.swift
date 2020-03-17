@@ -137,7 +137,7 @@ open class TabBar: Bar {
     }
     
     /// A reference to the line UIView.
-    open let line = UIView()
+    public let line = UIView()
     
     /// The line color.
     open var lineColor: UIColor? {

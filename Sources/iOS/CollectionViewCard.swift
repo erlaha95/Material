@@ -51,7 +51,7 @@ open class CollectionViewCard: Card {
     
     /// A reference to the collectionView.
     @IBInspectable
-    open let collectionView = CollectionView()
+    public let collectionView = CollectionView()
     
     open override func layoutSubviews() {
         super.layoutSubviews()

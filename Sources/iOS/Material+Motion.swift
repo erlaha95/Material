@@ -45,13 +45,13 @@ public enum MotionAnimationFillMode: Int {
 public func MotionAnimationFillModeToValue(mode: MotionAnimationFillMode) -> String {
     switch mode {
     case .forwards:
-        return kCAFillModeForwards
+        return convertFromCAMediaTimingFillMode(CAMediaTimingFillMode.forwards)
     case .backwards:
-        return kCAFillModeBackwards
+        return convertFromCAMediaTimingFillMode(CAMediaTimingFillMode.backwards)
     case .both:
-        return kCAFillModeBoth
+        return convertFromCAMediaTimingFillMode(CAMediaTimingFillMode.both)
     case .removed:
-        return kCAFillModeRemoved
+        return convertFromCAMediaTimingFillMode(CAMediaTimingFillMode.removed)
     }
 }
 
@@ -72,15 +72,15 @@ public enum MotionAnimationTimingFunction: Int {
 public func MotionAnimationTimingFunctionToValue(timingFunction: MotionAnimationTimingFunction) -> CAMediaTimingFunction {
     switch timingFunction {
     case .default:
-        return CAMediaTimingFunction(name: kCAMediaTimingFunctionDefault)
+        return CAMediaTimingFunction(name: CAMediaTimingFunctionName.default)
     case .linear:
-        return CAMediaTimingFunction(name: kCAMediaTimingFunctionLinear)
+        return CAMediaTimingFunction(name: CAMediaTimingFunctionName.linear)
     case .easeIn:
-        return CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseIn)
+        return CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeIn)
     case .easeOut:
-        return CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseOut)
+        return CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeOut)
     case .easeInEaseOut:
-        return CAMediaTimingFunction(name: kCAMediaTimingFunctionEaseInEaseOut)
+        return CAMediaTimingFunction(name: CAMediaTimingFunctionName.easeInEaseOut)
     }
 }
 
@@ -148,7 +148,7 @@ extension UIViewController: MotionDelegate, UIViewControllerTransitioningDelegat
      - Parameter to toVC: A UIViewController that is being transitioned to.
      - Returns: An optional UIViewControllerAnimatedTransitioning.
      */
-    open func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationControllerOperation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
+    open func navigationController(_ navigationController: UINavigationController, animationControllerFor operation: UINavigationController.Operation, from fromVC: UIViewController, to toVC: UIViewController) -> UIViewControllerAnimatedTransitioning? {
         return fromVC.isMotionEnabled ? Motion(isPresenting: operation == .push, isContainer: true) : nil
     }
     
@@ -361,7 +361,7 @@ open class MotionAnimator: NSObject {
     open var transitionSnapshot: UIView!
     
     /// A reference to the transition background view.
-    open let transitionBackgroundView = UIView()
+    public let transitionBackgroundView = UIView()
     
     /// A reference to the view controller that is being transitioned to.
     open var toViewController: UIViewController {
@@ -586,12 +586,12 @@ extension MotionAnimator {
                 let tf = s.calculateAnimationTimingFunction(animations: v.motionAnimations)
                 
                 let snapshotGroup = Motion.animate(group: snapshotAnimations, duration: d)
-                snapshotGroup.fillMode = MotionAnimationFillModeToValue(mode: .forwards)
+                snapshotGroup.fillMode = convertToCAMediaTimingFillMode(MotionAnimationFillModeToValue(mode: .forwards))
                 snapshotGroup.isRemovedOnCompletion = false
                 snapshotGroup.timingFunction = MotionAnimationTimingFunctionToValue(timingFunction: tf)
                 
                 let snapshotChildGroup = Motion.animate(group: snapshotChildAnimations, duration: d)
-                snapshotChildGroup.fillMode = MotionAnimationFillModeToValue(mode: .forwards)
+                snapshotChildGroup.fillMode = convertToCAMediaTimingFillMode(MotionAnimationFillModeToValue(mode: .forwards))
                 snapshotChildGroup.isRemovedOnCompletion = false
                 snapshotChildGroup.timingFunction = MotionAnimationTimingFunctionToValue(timingFunction: tf)
                 
@@ -766,7 +766,7 @@ extension Motion {
      */
     open class func animate(group animations: [CAAnimation], timingFunction: MotionAnimationTimingFunction = .easeInEaseOut, duration: CFTimeInterval = 0.5) -> CAAnimationGroup {
         let group = CAAnimationGroup()
-        group.fillMode = MotionAnimationFillModeToValue(mode: .forwards)
+        group.fillMode = convertToCAMediaTimingFillMode(MotionAnimationFillModeToValue(mode: .forwards))
         group.isRemovedOnCompletion = false
         group.animations = animations
         group.duration = duration
@@ -834,4 +834,14 @@ open class DismissingMotion: Motion {
         toView.layoutIfNeeded()
     }
 
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromCAMediaTimingFillMode(_ input: CAMediaTimingFillMode) -> String {
+	return input.rawValue
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToCAMediaTimingFillMode(_ input: String) -> CAMediaTimingFillMode {
+	return CAMediaTimingFillMode(rawValue: input)
 }

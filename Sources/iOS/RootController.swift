@@ -103,9 +103,9 @@ open class RootController: UIViewController {
      the transition animation from the active rootViewController
      to the toViewController has completed.
      */
-	open func transition(to viewController: UIViewController, duration: TimeInterval = 0.5, options: UIViewAnimationOptions = [], animations: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
-		rootViewController.willMove(toParentViewController: nil)
-		addChildViewController(viewController)
+	open func transition(to viewController: UIViewController, duration: TimeInterval = 0.5, options: UIView.AnimationOptions = [], animations: (() -> Void)? = nil, completion: ((Bool) -> Void)? = nil) {
+		rootViewController.willMove(toParent: nil)
+		addChild(viewController)
 		viewController.view.frame = rootViewController.view.frame
         transition(from: rootViewController,
             to: viewController,
@@ -116,13 +116,13 @@ open class RootController: UIViewController {
                     return
                 }
                 
-                viewController.didMove(toParentViewController: s)
-                s.rootViewController.removeFromParentViewController()
+                viewController.didMove(toParent: s)
+                s.rootViewController.removeFromParent()
                 s.rootViewController = viewController
                 s.rootViewController.view.clipsToBounds = true
                 s.rootViewController.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]
                 s.rootViewController.view.contentScaleFactor = Screen.scale
-                s.view.sendSubview(toBack: s.rootViewController.view)
+                s.view.sendSubviewToBack(s.rootViewController.view)
                 completion?(result)
 			}
 	}
@@ -149,7 +149,7 @@ open class RootController: UIViewController {
 	}
 }
 
-extension RootController {
+@objc extension RootController {
     /// A method that prepares the rootViewController.
     internal func prepareRootViewController() {
         prepare(viewController: rootViewController, withContainer: view)
@@ -168,9 +168,9 @@ extension RootController {
             return
         }
         
-        addChildViewController(v)
+        addChild(v)
         container.addSubview(v.view)
-        v.didMove(toParentViewController: self)
+        v.didMove(toParent: self)
         v.view.frame = container.bounds
         v.view.clipsToBounds = true
         v.view.autoresizingMask = [.flexibleWidth, .flexibleHeight]

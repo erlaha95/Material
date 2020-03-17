@@ -60,7 +60,7 @@ extension UIViewController {
 
 open class CollectionViewController: UIViewController {
     /// A reference to a Reminder.
-    open let collectionView = CollectionView()
+    public let collectionView = CollectionView()
     
     open var dataSourceItems = [DataSourceItem]()
     

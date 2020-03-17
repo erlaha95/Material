@@ -82,7 +82,7 @@ open class ToolbarController: StatusBarController {
     
     /// Reference to the Toolbar.
     @IBInspectable
-    open let toolbar = Toolbar()
+    public let toolbar = Toolbar()
     
     /// Internal reference to the floatingViewController.
 	private var internalFloatingViewController: UIViewController?
@@ -115,9 +115,9 @@ open class ToolbarController: StatusBarController {
                             return
                         }
                         
-                        v.willMove(toParentViewController: nil)
+                        v.willMove(toParent: nil)
                         v.view.removeFromSuperview()
-                        v.removeFromParentViewController()
+                        v.removeFromParent()
                         v.view.layer.shouldRasterize = false
                         s.isUserInteractionEnabled = true
                         s.toolbar.isUserInteractionEnabled = true
@@ -133,13 +133,13 @@ open class ToolbarController: StatusBarController {
 			
 			if let v = value {
 				// Add the noteViewController! to the view.
-				addChildViewController(v)
+				addChild(v)
 				v.view.frame = view.bounds
 				v.view.center.y = 2 * view.bounds.height
 				v.view.isHidden = true
 				view.insertSubview(v.view, aboveSubview: toolbar)
 				v.view.layer.zPosition = 1500
-				v.didMove(toParentViewController: self)
+				v.didMove(toParent: self)
 				v.view.isHidden = false
 				v.view.layer.rasterizationScale = Screen.scale
 				v.view.layer.shouldRasterize = true

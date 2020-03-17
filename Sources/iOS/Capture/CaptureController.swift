@@ -52,7 +52,7 @@ extension UIViewController {
 open class CaptureController: ToolbarController {
     /// A reference to the Capture instance.
     @IBInspectable
-    open let capture = Capture()
+    public let capture = Capture()
     
     open override var supportedInterfaceOrientations: UIInterfaceOrientationMask {
         return UIInterfaceOrientationMask.portrait

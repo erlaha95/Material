@@ -85,7 +85,7 @@ open class StatusBarController: RootController {
     open var shouldHideStatusBarOnRotation = true
     
     /// A reference to the statusBar.
-    open let statusBar = UIView()
+    public let statusBar = UIView()
 	
 	/**
      To execute in the order of the layout chain, override this

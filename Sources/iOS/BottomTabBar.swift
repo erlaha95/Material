@@ -32,8 +32,8 @@ import UIKit
 
 extension UITabBarItem {
 	/// Sets the color of the title color for a state.
-	public func setTitleColor(color: UIColor, forState state: UIControlState) {
-		setTitleTextAttributes([NSForegroundColorAttributeName: color], for: state)
+	public func setTitleColor(color: UIColor, forState state: UIControl.State) {
+		setTitleTextAttributes(convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): color]), for: state)
 	}
 }
 
@@ -85,17 +85,17 @@ open class BottomTabBar: UITabBar {
 				if .phone == Device.userInterfaceIdiom {
 					if nil == item.title {
 						let inset: CGFloat = 7
-						item.imageInsets = UIEdgeInsetsMake(inset, 0, -inset, 0)
+						item.imageInsets = UIEdgeInsets.init(top: inset, left: 0, bottom: -inset, right: 0)
 					} else {
 						let inset: CGFloat = 6
 						item.titlePositionAdjustment.vertical = -inset
 					}
 				} else if nil == item.title {
                     let inset: CGFloat = 9
-                    item.imageInsets = UIEdgeInsetsMake(inset, 0, -inset, 0)
+                    item.imageInsets = UIEdgeInsets.init(top: inset, left: 0, bottom: -inset, right: 0)
                 } else {
                     let inset: CGFloat = 3
-                    item.imageInsets = UIEdgeInsetsMake(inset, 0, -inset, 0)
+                    item.imageInsets = UIEdgeInsets.init(top: inset, left: 0, bottom: -inset, right: 0)
                     item.titlePositionAdjustment.vertical = -inset
                 }
 			}
@@ -130,4 +130,15 @@ open class BottomTabBar: UITabBar {
 		shadowImage = image
 		backgroundImage = image
 	}
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }

@@ -63,7 +63,7 @@ public protocol SearchBarDelegate {
 open class SearchBar: Bar {
 	/// The UITextField for the searchBar.
 	@IBInspectable
-    open let textField = UITextField()
+    public let textField = UITextField()
 	
 	/// Reference to the clearButton.
 	open fileprivate(set) var clearButton: IconButton!
@@ -109,7 +109,7 @@ open class SearchBar: Bar {
     open var placeholder: String? {
 		didSet {
 			if let v = placeholder {
-				textField.attributedPlaceholder = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderColor])
+				textField.attributedPlaceholder = NSAttributedString(string: v, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): placeholderColor]))
 			}
 		}
 	}
@@ -119,7 +119,7 @@ open class SearchBar: Bar {
     open var placeholderColor = Color.darkText.others {
 		didSet {
 			if let v = placeholder {
-				textField.attributedPlaceholder = NSAttributedString(string: v, attributes: [NSForegroundColorAttributeName: placeholderColor])
+				textField.attributedPlaceholder = NSAttributedString(string: v, attributes: convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): placeholderColor]))
 			}
 		}
 	}
@@ -234,4 +234,15 @@ extension SearchBar {
         textField.rightViewMode = .whileEditing
         textField.rightView = clearButton
     }
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
+	guard let input = input else { return nil }
+	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
+}
+
+// Helper function inserted by Swift 4.2 migrator.
+fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
+	return input.rawValue
 }
