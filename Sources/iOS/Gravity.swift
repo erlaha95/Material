@@ -50,33 +50,28 @@ public enum Gravity: Int {
 public func GravityToValue(gravity: Gravity) -> String {
 	switch gravity {
 	case .center:
-		return convertFromCALayerContentsGravity(CALayerContentsGravity.center)
+		return CALayerContentsGravity.center.rawValue
 	case .top:
-		return convertFromCALayerContentsGravity(CALayerContentsGravity.top)
+		return CALayerContentsGravity.top.rawValue
 	case .bottom:
-		return convertFromCALayerContentsGravity(CALayerContentsGravity.bottom)
+		return CALayerContentsGravity.bottom.rawValue
 	case .left:
-		return convertFromCALayerContentsGravity(CALayerContentsGravity.left)
+		return CALayerContentsGravity.left.rawValue
 	case .right:
-		return convertFromCALayerContentsGravity(CALayerContentsGravity.right)
+		return CALayerContentsGravity.right.rawValue
 	case .topLeft:
-		return convertFromCALayerContentsGravity(CALayerContentsGravity.bottomLeft)
+		return CALayerContentsGravity.bottomLeft.rawValue
 	case .topRight:
-		return convertFromCALayerContentsGravity(CALayerContentsGravity.bottomRight)
+		return CALayerContentsGravity.bottomRight.rawValue
 	case .bottomLeft:
-		return convertFromCALayerContentsGravity(CALayerContentsGravity.topLeft)
+		return CALayerContentsGravity.topLeft.rawValue
 	case .bottomRight:
-		return convertFromCALayerContentsGravity(CALayerContentsGravity.topRight)
+		return CALayerContentsGravity.topRight.rawValue
 	case .resize:
-		return convertFromCALayerContentsGravity(CALayerContentsGravity.resize)
+		return CALayerContentsGravity.resize.rawValue
 	case .resizeAspect:
-		return convertFromCALayerContentsGravity(CALayerContentsGravity.resizeAspect)
+		return CALayerContentsGravity.resizeAspect.rawValue
 	case .resizeAspectFill:
-		return convertFromCALayerContentsGravity(CALayerContentsGravity.resizeAspectFill)
+		return CALayerContentsGravity.resizeAspectFill.rawValue
 	}
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromCALayerContentsGravity(_ input: CALayerContentsGravity) -> String {
-	return input.rawValue
 }

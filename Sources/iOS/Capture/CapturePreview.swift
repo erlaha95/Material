@@ -74,11 +74,6 @@ open class CapturePreview: View {
 	private func preparePreviewLayer() {
 		layer.backgroundColor = Color.black.cgColor
 		layer.masksToBounds = true
-		(layer as! AVCaptureVideoPreviewLayer).videoGravity = AVLayerVideoGravity(rawValue: convertFromAVLayerVideoGravity(AVLayerVideoGravity.resizeAspectFill))
+		(layer as! AVCaptureVideoPreviewLayer).videoGravity = .resizeAspectFill
 	}
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromAVLayerVideoGravity(_ input: AVLayerVideoGravity) -> String {
-	return input.rawValue
 }

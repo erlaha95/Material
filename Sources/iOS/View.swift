@@ -119,10 +119,10 @@ open class View: UIView {
 	@IBInspectable
     open var contentsGravity: String {
 		get {
-			return convertFromCALayerContentsGravity(visualLayer.contentsGravity)
+			return visualLayer.contentsGravity.rawValue
 		}
 		set(value) {
-			visualLayer.contentsGravity = convertToCALayerContentsGravity(value)
+			visualLayer.contentsGravity = CALayerContentsGravity(rawValue: value)
 		}
 	}
 	
@@ -198,14 +198,4 @@ extension View {
         visualLayer.frame = bounds
         visualLayer.cornerRadius = cornerRadius
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromCALayerContentsGravity(_ input: CALayerContentsGravity) -> String {
-	return input.rawValue
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToCALayerContentsGravity(_ input: String) -> CALayerContentsGravity {
-	return CALayerContentsGravity(rawValue: input)
 }

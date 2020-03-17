@@ -33,7 +33,7 @@ import UIKit
 extension UITabBarItem {
 	/// Sets the color of the title color for a state.
 	public func setTitleColor(color: UIColor, forState state: UIControl.State) {
-		setTitleTextAttributes(convertToOptionalNSAttributedStringKeyDictionary([convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor): color]), for: state)
+        setTitleTextAttributes([.foregroundColor: color], for: .normal)
 	}
 }
 
@@ -130,15 +130,4 @@ open class BottomTabBar: UITabBar {
 		shadowImage = image
 		backgroundImage = image
 	}
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToOptionalNSAttributedStringKeyDictionary(_ input: [String: Any]?) -> [NSAttributedString.Key: Any]? {
-	guard let input = input else { return nil }
-	return Dictionary(uniqueKeysWithValues: input.map { key, value in (NSAttributedString.Key(rawValue: key), value)})
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
-	return input.rawValue
 }

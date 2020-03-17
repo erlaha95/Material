@@ -89,7 +89,7 @@ open class Layer: CAShapeLayer {
 	/// A Preset for the contentsGravity property.
 	open var contentsGravityPreset: Gravity {
 		didSet {
-			contentsGravity = convertToCALayerContentsGravity(GravityToValue(gravity: contentsGravityPreset))
+			contentsGravity = CALayerContentsGravity(rawValue: GravityToValue(gravity: contentsGravityPreset))
 		}
 	}
 	
@@ -173,14 +173,4 @@ open class Layer: CAShapeLayer {
 		visualLayer.frame = bounds
 		visualLayer.cornerRadius = cornerRadius
 	}
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToCALayerContentsGravity(_ input: String) -> CALayerContentsGravity {
-	return CALayerContentsGravity(rawValue: input)
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromCALayerContentsGravity(_ input: CALayerContentsGravity) -> String {
-	return input.rawValue
 }

@@ -45,13 +45,13 @@ public enum MotionAnimationFillMode: Int {
 public func MotionAnimationFillModeToValue(mode: MotionAnimationFillMode) -> String {
     switch mode {
     case .forwards:
-        return convertFromCAMediaTimingFillMode(CAMediaTimingFillMode.forwards)
+        return CAMediaTimingFillMode.forwards.rawValue
     case .backwards:
-        return convertFromCAMediaTimingFillMode(CAMediaTimingFillMode.backwards)
+        return CAMediaTimingFillMode.backwards.rawValue
     case .both:
-        return convertFromCAMediaTimingFillMode(CAMediaTimingFillMode.both)
+        return CAMediaTimingFillMode.both.rawValue
     case .removed:
-        return convertFromCAMediaTimingFillMode(CAMediaTimingFillMode.removed)
+        return CAMediaTimingFillMode.removed.rawValue
     }
 }
 
@@ -586,12 +586,12 @@ extension MotionAnimator {
                 let tf = s.calculateAnimationTimingFunction(animations: v.motionAnimations)
                 
                 let snapshotGroup = Motion.animate(group: snapshotAnimations, duration: d)
-                snapshotGroup.fillMode = convertToCAMediaTimingFillMode(MotionAnimationFillModeToValue(mode: .forwards))
+                snapshotGroup.fillMode = CAMediaTimingFillMode(rawValue: MotionAnimationFillModeToValue(mode: .forwards))
                 snapshotGroup.isRemovedOnCompletion = false
                 snapshotGroup.timingFunction = MotionAnimationTimingFunctionToValue(timingFunction: tf)
                 
                 let snapshotChildGroup = Motion.animate(group: snapshotChildAnimations, duration: d)
-                snapshotChildGroup.fillMode = convertToCAMediaTimingFillMode(MotionAnimationFillModeToValue(mode: .forwards))
+                snapshotChildGroup.fillMode = CAMediaTimingFillMode(rawValue: MotionAnimationFillModeToValue(mode: .forwards))
                 snapshotChildGroup.isRemovedOnCompletion = false
                 snapshotChildGroup.timingFunction = MotionAnimationTimingFunctionToValue(timingFunction: tf)
                 
@@ -766,7 +766,7 @@ extension Motion {
      */
     open class func animate(group animations: [CAAnimation], timingFunction: MotionAnimationTimingFunction = .easeInEaseOut, duration: CFTimeInterval = 0.5) -> CAAnimationGroup {
         let group = CAAnimationGroup()
-        group.fillMode = convertToCAMediaTimingFillMode(MotionAnimationFillModeToValue(mode: .forwards))
+        group.fillMode = CAMediaTimingFillMode(rawValue: MotionAnimationFillModeToValue(mode: .forwards))
         group.isRemovedOnCompletion = false
         group.animations = animations
         group.duration = duration
@@ -834,14 +834,4 @@ open class DismissingMotion: Motion {
         toView.layoutIfNeeded()
     }
 
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromCAMediaTimingFillMode(_ input: CAMediaTimingFillMode) -> String {
-	return input.rawValue
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToCAMediaTimingFillMode(_ input: String) -> CAMediaTimingFillMode {
-	return CAMediaTimingFillMode(rawValue: input)
 }

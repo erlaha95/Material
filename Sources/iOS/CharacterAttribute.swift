@@ -57,47 +57,47 @@ public enum CharacterAttribute: String {
 public func CharacterAttributeToValue(attribute: CharacterAttribute) -> String {
     switch attribute {
     case .font:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.font)
+        return NSAttributedString.Key.font.rawValue
     case .paragraphStyle:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.paragraphStyle)
+        return NSAttributedString.Key.paragraphStyle.rawValue
     case .forgroundColor:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.foregroundColor)
+        return NSAttributedString.Key.foregroundColor.rawValue
     case .backgroundColor:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.backgroundColor)
+        return NSAttributedString.Key.backgroundColor.rawValue
     case .ligature:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.ligature)
+        return NSAttributedString.Key.ligature.rawValue
     case .kern:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.kern)
+        return NSAttributedString.Key.kern.rawValue
     case .strikethroughStyle:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.strikethroughStyle)
+        return NSAttributedString.Key.strikethroughStyle.rawValue
     case .underlineStyle:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.underlineStyle)
+        return NSAttributedString.Key.underlineStyle.rawValue
     case .strokeColor:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.strokeColor)
+        return NSAttributedString.Key.strokeColor.rawValue
     case .strokeWidth:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.strokeWidth)
+        return NSAttributedString.Key.strokeWidth.rawValue
     case .shadow:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.shadow)
+        return NSAttributedString.Key.shadow.rawValue
     case .textEffect:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.textEffect)
+        return NSAttributedString.Key.textEffect.rawValue
     case .attachment:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.attachment)
+        return NSAttributedString.Key.attachment.rawValue
     case .link:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.link)
+        return NSAttributedString.Key.link.rawValue
     case .baselineOffset:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.baselineOffset)
+        return NSAttributedString.Key.baselineOffset.rawValue
     case .underlineColor:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.underlineColor)
+        return NSAttributedString.Key.underlineColor.rawValue
     case .strikethroughColor:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.strikethroughColor)
+        return NSAttributedString.Key.strikethroughColor.rawValue
     case .obliqueness:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.obliqueness)
+        return NSAttributedString.Key.obliqueness.rawValue
     case .expansion:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.expansion)
+        return NSAttributedString.Key.expansion.rawValue
     case .writingDirection:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.writingDirection)
+        return NSAttributedString.Key.writingDirection.rawValue
     case .verticalGlyphForm:
-        return convertFromNSAttributedStringKey(NSAttributedString.Key.verticalGlyphForm)
+        return NSAttributedString.Key.verticalGlyphForm.rawValue
     }
 }
 
@@ -109,7 +109,7 @@ extension NSMutableAttributedString {
      - Parameter range: A NSRange.
      */
     open func addAttribute(characterAttribute: CharacterAttribute, value: Any, range: NSRange) {
-        addAttribute(convertToNSAttributedStringKey(CharacterAttributeToValue(attribute: characterAttribute)), value: value, range: range)
+        addAttribute(NSAttributedString.Key(rawValue: characterAttribute.rawValue), value: value, range: range)
     }
     
     /**
@@ -151,7 +151,7 @@ extension NSMutableAttributedString {
      - Parameter range: A NSRange.
      */
     open func removeAttribute(characterAttribute: CharacterAttribute, range: NSRange) {
-        removeAttribute(convertToNSAttributedStringKey(CharacterAttributeToValue(attribute: characterAttribute)), range: range)
+        removeAttribute(NSAttributedString.Key(characterAttribute.rawValue), range: range)
     }
     
     /**
@@ -164,14 +164,4 @@ extension NSMutableAttributedString {
             removeAttribute(characterAttribute: k, range: range)
         }
     }
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertFromNSAttributedStringKey(_ input: NSAttributedString.Key) -> String {
-	return input.rawValue
-}
-
-// Helper function inserted by Swift 4.2 migrator.
-fileprivate func convertToNSAttributedStringKey(_ input: String) -> NSAttributedString.Key {
-	return NSAttributedString.Key(rawValue: input)
 }
